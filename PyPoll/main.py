@@ -34,12 +34,15 @@ with open(csvpath) as csvfile:
     print("-------------------------")
     print(f"Total Votes: {total}")
     print("-------------------------")
+
+    # Iterates through the dictionary to print each Candidate and their respective vote totals/percentages
     for each in count_by_candidates:
         print(f"{each}: {round(count_by_candidates[each]/total*100,3)}% ({count_by_candidates[each]})")
     print("-------------------------")
     print(f"Winner: {winner}")
     print("-------------------------")
 
+# Write the same printed information to a .txt file
 with open(output_path, 'w') as writer:
     writer.write("Election Results\n")
     writer.write("-------------------------\n")
