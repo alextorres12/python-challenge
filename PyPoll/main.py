@@ -7,8 +7,7 @@ csvpath = os.path.join('Resources','election_data.csv')
 # Set path to output .txt file
 output_path = os.path.join('Analysis','election_results.txt')
 
-# Initialize list to store candidate information
-votes = []
+# Initialize dictionary to store candidate information and vote counts
 count_by_candidates = {}
 
 
@@ -18,22 +17,41 @@ with open(csvpath) as csvfile:
     # Skip header
     next(csvreader)
 
-    # Adds all votes to a list
+    # Iterates through all rows of the csv
     for row in csvreader:
-        votes.append(row[2])
+        # Adds unique candidates as keys to dictionary
+        if row[2] not in count_by_candidates:
+            count_by_candidates.update({row[2]:0})
+        # Adds vote totals to each candidate
+        else:
+            count_by_candidates[row[2]] = count_by_candidates[row[2]]+1
 
-    # Adds all unique candidates to a list
-    for each in votes:
-        if each not in count_by_candidates:
-            count_by_candidates.update({each:0})
+    # Determine the total votes and election winner
+    total = sum(count_by_candidates.values())
+    winner = max(count_by_candidates, key=count_by_candidates.get)
 
-    for each in votes:
-        count_by_candidates[each] = count_by_candidates[each]+1
-    
+    print("Election Results")
+    print("-------------------------")
+    print(f"Total Votes: {total}")
+    print("-------------------------")
+    for each in count_by_candidates:
+        print(f"{each}: {round(count_by_candidates[each]/total*100,3)}% ({count_by_candidates[each]})")
+    print("-------------------------")
+    print(f"Winner: {winner}")
+    print("-------------------------")
 
-    
-    print(f"Total Votes: {len(votes)}")
-    print(count_by_candidates)
+with open(output_path, 'w') as writer:
+    writer.write("Election Results\n")
+    writer.write("-------------------------\n")
+    writer.write(f"Total Votes: {total}\n")
+    writer.write("-------------------------\n")
+    for each in count_by_candidates:
+        writer.write(f"{each}: {round(count_by_candidates[each]/total*100,3)}% ({count_by_candidates[each]})\n")
+    writer.write("-------------------------\n")
+    writer.write(f"Winner: {winner}\n")
+    writer.write("-------------------------\n")
+
+
 
 
     
