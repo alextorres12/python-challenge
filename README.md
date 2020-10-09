@@ -28,6 +28,8 @@ This script works by reading in a CSV of raw vote data. It will iterate through 
 
 ![PyPoll Solution](https://github.com/alextorres12/python-challenge/blob/master/Images/PyPoll.png)
 
+Playing around with github commits
+
 
 
 
